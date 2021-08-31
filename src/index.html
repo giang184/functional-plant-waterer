@@ -13,12 +13,24 @@
         <button class="btn-success" id="feed">Add soil 1</button>
         <button class="btn-success" id="feedWell">Add soil 5</button>
         <button class="btn-success" id="water">Add water 1</button>
-        <button class="btn-success" id="waterWell">Add soil 5</button>
+        <button class="btn-success" id="waterWell">Add water 5</button>
         <button class="btn-success" id="show-state">Current Stats</button>
       </div>
-      <h1>Your Plant's Values</h1>
+      <h1><div id="trueName">Your Plant's Values</div></h1>
       <h3><div id="soil-value">0</div></h3>
       <h3><div id="water-value">0</div></h3>
+
+      <form id="form1">
+        <label for="newName">Name a new plant!</label>
+        <input type="string" id="newName" required><br><br>
+        <button type="submit" class="btn btn-primary" id="button1">See your plant come to be</button>
+      </form>
+
+
+      <label for="plant-selector">Select a plant to do stuff with</label>
+      <select name="plant-selector" id="plant-selector">
+      </select>
+
     </div>
   </body>
 </html>
