@@ -29,48 +29,8 @@ const changeState = (prop) => {
   }
 }
 
-// We create four functions using our function factory. We could easily create many more.
-
-const feed = changeState("soil")(1);
-const blueFood = changeState("soil")(5);
-const hydrate = changeState("water")(1);
-const superWater = changeState("water")(5);
 
 $(document).ready(function() {
-
-  $('#feedWell').click(function() {
-    let e = document.getElementById("plant-selector");
-    let plant = e.value;
-    const newState = plants[plant](blueFood);
-    $('#soil-value').text(`Soil: ${newState.soil}`);
-  });
-
-  $('#feed').click(function() {
-    let e = document.getElementById("plant-selector");
-    let plant = e.value;
-    const newState = plants[plant](feed);
-    $('#soil-value').text(`Soil: ${newState.soil}`);
-  });
-
-  $('#water').click(function() {
-    let e = document.getElementById("plant-selector");
-    let plant = e.value;
-    const newState = plants[plant](hydrate);
-    $('#water-value').text(`Water: ${newState.water}`);
-  });
-
-  $('#waterWell').click(function() {
-    let e = document.getElementById("plant-selector");
-    let plant = e.value;
-    const newState = plants[plant](superWater);
-    $('#water-value').text(`Water: ${newState.water}`);
-  });
-
-  $('#newPlant').click(function() {
-    const stateControl = storeState();
-    const newState = stateControl(superWater);
-    $('#water-value').text(`Water: ${newState.water}`);
-  });
 
   $('#form1').submit(function() {
     event.preventDefault();
@@ -80,28 +40,33 @@ $(document).ready(function() {
     $('#plant-selector').append(`<option value=${val1}>${val1}</option>`);
   });
 
-  // keys(plant)[keys(plant).length -1]
+  $('#form-soil').submit(function() {
+    event.preventDefault();
+    let amount = parseInt($('#amount').val());
+    let property = $('#propertyName').val()
+    let e = document.getElementById("plant-selector");
+    let plant = e.value;
+    const feed = changeState(property)(amount);
+    const newState = plants[plant](feed);
+    $('#displayProperties').append(`<h3>${property}: ${newState[property]}</p>`);
+  });
 
-
-  // This function doesn't actually do anything useful in this application - it just demonstrates how we can "look" at the current state (which the DOM is holding anyway). However, students often do need the ability to see the current state without changing it so it's included here for reference.
-  
   $('#show-state').click(function() {
     const currentState = stateControl();
     $('#soil-value').text(`Soil: ${currentState.soil}`);
     $('#water-value').text(`Water: ${currentState.water}`);
   });
 
-
   document.getElementById('plant-selector').addEventListener('change', function() {
     // const choice = $('#plant-selector').val();
     let e = document.getElementById("plant-selector");
     let plant = e.value;
-    $('#soil-value').text(`Soil: ${plants[plant]().soil}`);
-    $('#water-value').text(`Water: ${plants[plant]().soil}`);
     $('#trueName').text(`Your plant: ${plant}`);
-    console.log("test");
-    console.log(plants[plant]().soil );
-    console.log(plants);
+    const propArray = Object.keys(plants[plant]());
+    $('#displayProperties').empty();
+    propArray.forEach (function(key) {
+      $('#displayProperties').append(`<p>${key}: ${plants[plant]()[key]}</p>`);
+    });
   });
 
 });
